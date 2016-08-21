@@ -36,9 +36,17 @@ greed {
         cpp = ${greed.shared.cstyleLanguage} {
             longIntTypeName = long long
 
-            templates = [ dualcolor-tester, dualcolor-test, source, makefile, problem-desc ]
+            templates = [ dualcolor-tester, dualcolor-test, source, problem-desc ]
 
             templateDef = ${greed.shared.templateDef} {
+                filetest.templateFile = builtin(filetest/cpp.tmpl)
+                test {
+                    templateFile = builtin(test/cpp.tmpl)
+                    options {
+                        cpp11 = true
+                        runMultipleProcesses = true
+                    }
+                }
 
                 dualcolor-test.templateFile = builtin(dualcolor/main.cpp.tmpl)
                 dualcolor-tester {
@@ -52,12 +60,6 @@ greed {
                 }
 
                 problem-desc.options.showDefinition = cpp
-
-                makefile {
-                    templateFile = "make.cpp.tmpl"
-                    dependencies = [source]
-                    outputFile = "Makefile"
-                }
             }
         }
     }
